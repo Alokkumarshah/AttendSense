@@ -56,7 +56,7 @@ def get_trained_model():
     if len(X) == 0:
         return 0
 
-    clf = SVC(kernel='linear', probability=True, class_weight='balanced')
+    clf = SVC(kernel='linear', class_weight='balanced')
 
     try:
         clf.fit(X, y)
