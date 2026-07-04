@@ -1,3 +1,5 @@
+streamlit #frontend library 
+
 #utilitites
 numpy 
 pandas
@@ -14,4 +16,8 @@ bcrypt    # method for hashing
 segno    # for qr code
 pillow   # helps for image preprocessing in python
 
-streamlit #frontend library 
+
+
+#for voice
+librosa # edit and load voice
+resemblyzer # makes embeddiong of voice
