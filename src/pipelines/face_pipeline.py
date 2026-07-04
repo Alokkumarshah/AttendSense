@@ -30,8 +30,7 @@ def get_face_embeddings(image_np):
 
     for face in faces:
         shape = sp(image_np, face)
-        # num_jitters=1 keeps embeddings consistent with stored enrollment data.
-        # Changing this would make login embeddings incompatible with stored ones.
+
         face_descriptor = facerec.compute_face_descriptor(image_np, shape, 1)
         encodings.append(np.array(face_descriptor))
 
@@ -89,28 +88,19 @@ def predict_attendance(class_image_np):
 
     all_students = sorted(list(set(y_train)))
 
-    # ── Distance threshold ───────────────────────────────────────────────────
-    # Euclidean distance between 128-d dlib face embeddings.
-    #   0.60 = original default (too loose — caused friends to match each other)
-    #   0.50 = strict but fair for single-photo enrollment
-    #          Your own face from a different angle/light → typically 0.30–0.47
-    #          A different person                         → typically 0.55–0.80
-    # NOTE: Do NOT add an SVC confidence gate here. With only 1 training sample
-    # per class, sklearn's Platt-scaling probabilities are unreliable and will
-    # incorrectly reject valid users.
+
+  
     DISTANCE_THRESHOLD = 0.50
-    # ────────────────────────────────────────────────────────────────────────
+  
 
     for encoding in encodings:
-        # Step 1: Use SVC to predict the most likely student
+      
         if len(all_students) >= 2:
             predicted_id = int(clf.predict([encoding])[0])
         else:
             predicted_id = int(all_students[0])
 
-        # Step 2: Verify by computing Euclidean distance against ALL stored
-        # embeddings for that student, and take the closest (best) match.
-        # This correctly handles students with multiple enrolled photos.
+       
         candidate_embeddings = [
             X_train[i] for i, sid in enumerate(y_train) if sid == predicted_id
         ]
