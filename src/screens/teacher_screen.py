@@ -155,12 +155,12 @@ def teacher_tab_take_attendance():
 
                 enrolled_res = supabase.table('subject_students').select("*, students(*)").eq('subject_id',selected_subject_id ).execute()
                 enrolled_students = enrolled_res.data
-
+                results, attendance_to_log  = [], []
                 if not enrolled_students:
                     st.warning('No students enrolled in this course')
                 else:
 
-                    results, attendance_to_log  = [], []
+                    
 
                     current_timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
